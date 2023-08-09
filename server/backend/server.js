@@ -1,28 +1,31 @@
-const dotenv = require('dotenv')
-const express = require('express')
-dotenv.config();
+const express = require('express');
+require("dotenv").config();
+const http = require('http');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const socketIO = require('socket.io');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const app = express()
-const port = process.env.PORT
+const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 
-const {chats} = require("./data/data");
+const authRoutes =require("./routes/authRoutes");
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const PORT = process.env.PORT ;
 
-app.get("/api/chat", (req, res) => {
-  res.send(chats);
- 
-  
+mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true ,  family: 4})
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(error => console.error('MongoDB connection error:', error));
+
+app.use(cors());
+app.use(express.json());
+
+app.use("/auth",authRoutes);
+
+app.get("/", (req,res) => res.json({message: "SetUp Success!!!"}));
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-app.get("/api/chat/:id", (req, res) => {
-  const singleChat = chats.find((c) => c._id === req.params.id);
-  res.send(singleChat);
-  //console.log(req.params.id);
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
