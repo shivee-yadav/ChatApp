@@ -12,6 +12,9 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 const authRoutes =require("./routes/authRoutes");
+const chatRoutes =require("./routes/chatRoutes");
+import routeConfig from './config/routeConfig';
+const passport = require('passport');
 
 const PORT = process.env.PORT ;
 
@@ -21,8 +24,10 @@ mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopolo
 
 app.use(cors());
 app.use(express.json());
+routeConfig(passport);
 
 app.use("/auth",authRoutes);
+app.use("/api/chat",chatRoutes);
 
 app.get("/", (req,res) => res.json({message: "SetUp Success!!!"}));
 

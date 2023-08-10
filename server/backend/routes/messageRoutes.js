@@ -12,8 +12,8 @@ router.post('/create-message', async (req, res) => {
 
     // Authenticate user and check role
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'secretKey');
-    if (decodedToken.role !== 'Manufacturer') {
+    const decodedToken = jwt.verify(token, 'ChatApp');
+    if (decodedToken.userRole !== 'Manufacturer') {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 
