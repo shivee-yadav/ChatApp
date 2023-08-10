@@ -13,6 +13,7 @@ const io = socketIO(server);
 
 const authRoutes =require("./routes/authRoutes");
 const chatRoutes =require("./routes/chatRoutes");
+const messageRoutes =require("./routes/messageRoutes");
 import routeConfig from './config/routeConfig';
 const passport = require('passport');
 
@@ -28,6 +29,7 @@ routeConfig(passport);
 
 app.use("/auth",authRoutes);
 app.use("/api/chat",chatRoutes);
+app.use("/api/message",messageRoutes);
 
 app.get("/", (req,res) => res.json({message: "SetUp Success!!!"}));
 

@@ -7,7 +7,7 @@ import Home from "./Pages/Home";
 
 import Login from './components/Login';
 import Register from './components/Register';
-import Landing from './components/Landing';
+import Landing from './components/MyChats';
 import ManufacturerLanding from './components/ManufacturerLanding';
 import TransporterLanding from './components/TransporterLanding';
 import Chats from "./Pages/Chats";
